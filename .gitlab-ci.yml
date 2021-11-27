@@ -18,10 +18,9 @@ deploy-eks:
     - apk add --no-cache curl jq python3 py3-pip
     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     - curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-    - chmod +x kubectl
-    - mkdir -p ~/.local/bin/kubectl
-    - mv ./kubectl ~/.local/bin/kubectl
-    - export PATH=~/.local/bin/:$PATH
+    - chmod +x ./kubectl
+    - mkdir -p /usr/local/bin/kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
     # Install aws cli
     - pip install awscli
   script:
