@@ -10,13 +10,12 @@ variables:
 deploy-eks:
   stage: deploy
   image: 
-    name: docker:latest
-  services:
-    - docker:19-dind
+    name: alpine:latest
   before_script:
     # Install kubectl
-    - apk add --no-cache curl jq python3 py3-pip
+    - apk add --no-cache curl jq python3 py3-pip ca-certificates 
     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - ls 
     - chmod +x ./kubectl
     - mkdir -p /usr/local/bin/kubectl
     - mv ./kubectl /usr/local/bin/kubectl
@@ -24,5 +23,5 @@ deploy-eks:
     - pip install awscli
   script:
     - aws eks update-kubeconfig --name $CI_GROUP_NAME --region $AWS_DEFAULT_REGION
-    - sudo kubectl apply -f kubernetes-manifests.yaml
-    - sudo kubectl get service frontend-external | awk '{print $4}'
+    - kubectl apply -f kubernetes-manifests.yaml
+    - kubectl get service frontend-external | awk '{print $4}'
