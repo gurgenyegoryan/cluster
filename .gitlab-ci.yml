@@ -15,13 +15,13 @@ deploy-eks:
     - docker:19-dind
   before_script:
     # Install kubectl
+    - apk add --no-cache curl jq python3 py3-pip
     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     - curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
     - chmod +x kubectl
     - mkdir -p ~/.local/bin/kubectl
     - mv ./kubectl ~/.local/bin/kubectl
     # Install aws cli
-    - apk add --no-cache curl jq python3 py3-pip
     - pip install awscli
   script:
     - aws eks update-kubeconfig --name $CI_GROUP_NAME --region $AWS_DEFAULT_REGION
