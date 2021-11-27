@@ -17,7 +17,6 @@ deploy-eks:
     # Install kubectl
     - apk add --no-cache curl jq python3 py3-pip
     - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    - curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
     - chmod +x ./kubectl
     - mkdir -p /usr/local/bin/kubectl
     - mv ./kubectl /usr/local/bin/kubectl
@@ -25,5 +24,5 @@ deploy-eks:
     - pip install awscli
   script:
     - aws eks update-kubeconfig --name $CI_GROUP_NAME --region $AWS_DEFAULT_REGION
-    - kubectl apply -f kubernetes-manifests.yaml
-    - kubectl get service frontend-external | awk '{print $4}'
+    - sudo kubectl apply -f kubernetes-manifests.yaml
+    - sudo kubectl get service frontend-external | awk '{print $4}'
