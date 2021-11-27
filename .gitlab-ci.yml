@@ -21,6 +21,7 @@ deploy-eks:
     - chmod +x kubectl
     - mkdir -p ~/.local/bin/kubectl
     - mv ./kubectl ~/.local/bin/kubectl
+    - export PATH=~/.local/bin/:$PATH
     # Install aws cli
     - pip install awscli
   script:
