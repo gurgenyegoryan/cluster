@@ -9,8 +9,6 @@ varriables:
 
 deploy-eks:
   stage: deploy
-  services:
-    - docker:19-dind
   tags:
     - telecomproject-cluster
   before_script:
