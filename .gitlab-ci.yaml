@@ -1,7 +1,7 @@
 stages:
   - deploy
 
-varriables:
+variables:
   CI_GROUP_NAME: telecomproject
   AWS_DEFAULT_REGION: eu-west-1
   AWS_ACCESS_KEY_ID: AKIAUNC467SMOH2XM5NF
@@ -9,6 +9,10 @@ varriables:
 
 deploy-eks:
   stage: deploy
+  image: 
+    name: docker:latest
+  services:
+    - docker:19-dind
   tags:
     - telecomproject-cluster
   before_script:
