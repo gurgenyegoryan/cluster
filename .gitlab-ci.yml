@@ -14,9 +14,9 @@ deploy-eks:
   services:
     - docker:19-dind
   before_script:
-    # Install kubectl
     - apk add --no-cache curl jq python3 py3-pip ca-certificates 
     - apk update && apk add curl git
+    # Install kubectl
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.1/bin/linux/amd64/kubectl
     - chmod u+x kubectl && mv kubectl /bin/kubectl
     # Install aws cli
@@ -25,3 +25,4 @@ deploy-eks:
     - aws eks update-kubeconfig --name $CI_GROUP_NAME --region $AWS_DEFAULT_REGION
     - kubectl apply -f kubernetes-manifests.yaml
     - kubectl get service frontend-external | awk '{print $4}'
+
