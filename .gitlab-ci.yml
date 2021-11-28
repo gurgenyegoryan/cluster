@@ -10,15 +10,15 @@ variables:
 deploy-eks:
   stage: deploy
   image: 
-    name: alpine:latest
+    name: docker:latest
+  services:
+    - docker:19-dind
   before_script:
     # Install kubectl
     - apk add --no-cache curl jq python3 py3-pip ca-certificates 
-    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    - ls 
-    - chmod +x ./kubectl
-    - mkdir -p /usr/local/bin/kubectl
-    - mv ./kubectl /usr/local/bin/kubectl
+    - apk update && apk add curl git
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.1/bin/linux/amd64/kubectl
+    - chmod u+x kubectl && mv kubectl /bin/kubectl
     # Install aws cli
     - pip install awscli
   script:
