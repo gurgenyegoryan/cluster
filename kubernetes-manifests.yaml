@@ -302,7 +302,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: paymentservice-container
-        image: 302990163096.dkr.ecr.eu-west-1.amazonaws.com/telecomproject::paymentservice
+        image: 302990163096.dkr.ecr.eu-west-1.amazonaws.com/telecomproject:paymentservice
         ports:
         - containerPort: 50051
         env:
