@@ -7,9 +7,8 @@ deploy-eks:
     name: $CI_REGISTRY/telecomproject/cluster/docker:latest
   services:
     - docker:19-dind
-  when: manual
+  when: manual # testing
   script:
     - aws eks update-kubeconfig --name $PROJECT_NAME --region $AWS_DEFAULT_REGION
     - kubectl apply -f kubernetes-manifests.yaml
     - kubectl get service frontend-external | awk '{print $4}'
-
