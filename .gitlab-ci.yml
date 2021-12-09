@@ -1,12 +1,20 @@
 stages:
+  - setup
   - deploy
+
+setup-cluster:
+  stage: setup
+  image: 
+    name: $CI_REGISTRY/telecomproject/cluster/deptools:latest
+  when: manual # testing
+  script:
+    - eksctl create cluster -f create_cluster.yaml || true
 
 deploy-eks:
   stage: deploy
   image: 
-    name: $CI_REGISTRY/telecomproject/cluster/docker:latest
-  services:
-    - docker:19-dind
+    name: $CI_REGISTRY/telecomproject/cluster/deptools:latest
+  needs: [setup-cluster]
   when: manual # testing
   script:
     - aws eks update-kubeconfig --name $PROJECT_NAME --region $AWS_DEFAULT_REGION
